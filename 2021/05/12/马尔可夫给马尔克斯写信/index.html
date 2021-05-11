@@ -28,7 +28,7 @@
 <meta property="og:description" content="许多年里，我们无法谈论其他事情。受线性习惯支配的日常行为，如今却突然围绕着同一件令人忧心的事运转起来。拂晓前的鸡鸣敦促我们去梳理构成这桩荒诞事件的一连串巧合。诚然，我们这样做并不是由于渴望解开谜团，而是因为如果不能确知命运指派给我们怎样的角色和使命，我们就无法继续活下去。————《一桩事先张扬的凶杀案》  多年以后，面对屏幕，Mei会想起五月那个想不出开头的下午，以及不知结束的高温和雨。 寒暄最">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-05-12T04:48:08.000Z">
-<meta property="article:modified_time" content="2021-05-11T11:17:55.611Z">
+<meta property="article:modified_time" content="2021-05-11T11:24:15.216Z">
 <meta property="article:author" content="Leslie Mei">
 <meta property="article:tag" content="Markov Chain">
 <meta property="article:tag" content="魔幻现实">
@@ -466,7 +466,7 @@ height:50vh;
 <p>整个故事的情节并不复杂，身为富豪的新郎巴亚尔多·圣罗曼发现自己的新婚妻子安赫拉·维卡里奥已非处女，就把新娘退回了娘家，可惜二月的加勒比小镇，“名誉就像爱情”，新娘在逼迫下说出了一个名字，新娘的两位哥哥（维卡里奥兄弟）在得知是圣地亚哥·纳萨尔的恶行后，决定提刀前去雪耻。这场事先张扬的凶杀案从凌晨三点绵延到将近七点，几乎全镇人都知道他们的计划，除了圣地亚哥·纳萨尔；几乎全镇人都能阻止，但没有人真正行动——除了去广场上占好位置。维卡里奥兄弟一路上告诉所有人自己将要犯下罪行，机智地蹲在纳萨尔从不来的牛奶店，盯着纳萨尔几乎不走的屋子正门，就为了报仇雪耻。最后他们也如愿以偿，换来了纳萨尔的一句“他们把我杀了，韦内姑娘。”</p>
 <p>究竟是不是圣地亚哥·纳萨尔侵犯了安赫拉·维卡里奥，没有人知道；但是但凡有一点差错，维卡里奥兄弟就杀不了圣地亚哥·纳萨尔。一种极强的宿命感将维卡里奥兄弟和圣地亚哥·纳萨尔推向那个他们都不想到达的屋子正门，如果这是小说的缘故，那灵感来源的案例未免有些过于惊悚了。抛开一些非社会性因素，究竟是以一个多么小的概率，才能让那些本可以阻止悲剧发生的人选择旁观，我猜这里可以用马尔可夫链算一算。（我自己爬）</p>
 <h2 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h2><p>Remark：这将是一个很不严谨的模型，甚至会有错误，欢迎指出。<br>RRemark：如果你不喜欢这部分，可以直接跳到这部分的结尾，我会用自然语言说一说结果，你或许会觉得有意思(至少我觉得还不错)。</p>
-<p>假设每个小镇居民 $n$ $(n=1,2,\cdots)$ 在知道维卡里奥兄弟要杀圣地亚哥·纳萨尔后，都有 $q=1-p$ 的概率选择采取行动救下圣地亚哥·纳萨尔，也可以以 $p$ 的概率选择无视，一旦有人采取行动拯救圣地亚哥·纳萨尔，他就可以存活，否则他就不能改变被杀的宿命。那么 ${X_n}$ 表示一个Markov Chain， $X_n$ 表示第 $n$ 个人得知消息并作出选择后，圣地亚哥·纳萨尔的结局状态，其状态空间为 ${0=死亡，1=存活}$ ，假设每个村民 $n$ 的行为独立同分布，那么这个Markov Chain是一个时间齐次的Markov Chain，其一步转移矩阵为:</p>
+<p>假设每个小镇居民 $n$ $(n=1,2,\cdots)$ 在知道维卡里奥兄弟要杀圣地亚哥·纳萨尔后，都有 $q=1-p$ 的概率选择采取行动救下圣地亚哥·纳萨尔，也可以以 $p$ 的概率选择无视，一旦有人采取行动拯救圣地亚哥·纳萨尔，他就可以存活，否则他就不能改变被杀的宿命。那么 $X_n （n = 1,2,\cdots）$ 为一个Markov Chain，表示第 $n$ 个人得知消息并作出选择后，圣地亚哥·纳萨尔的结局状态，其状态空间为 $(0=死亡，1=存活)$ ，假设每个村民 $n$ 的行为独立同分布，那么这个Markov Chain是一个时间齐次的Markov Chain，其一步转移矩阵为:</p>
 <script type="math/tex; mode=display">P =
 \left[
     \begin{matrix}
@@ -495,8 +495,8 @@ P(X_n=0) = 1</script><p>这是一个还算有趣的结论：在理想情况下�
     \end{matrix}
 \right]</script><p>也就是说，旁观者们一点都不会去想着去救下圣地亚哥·纳萨尔；与此同时，在这样的转移矩阵下，圣地亚哥·纳萨尔捧着自己肠子倒下，还必须要满足一个条件：死亡就是他的宿命：</p>
 <script type="math/tex; mode=display">X_0 = 0</script><p>于是，文章的开头的死亡宣判，就变得扑朔迷离起来，我不太能理解它究竟处于一种什么状态。马尔克斯先生懂不懂 Markov Chain 我不知道，但这倒是让这篇因为宿命感而诞生的小文章更具宿命感了。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>如果关于上面情况的解释没有说明白，我很抱歉（鞠躬），但我还是想说这应该不是一篇故弄玄虚/无病呻吟的小文章。笔记也好，书评也罢，我都乐于去接受这样的定位。加载页面应该花了你好一会，感谢你看到这里。</p>
-<p>至于下雨嘛，别犯傻了，五月下雨很正常。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>如果关于上面情况的解释没有说明白，我很抱歉（鞠躬），但我还是想说这应该不是一篇故弄玄虚/无病呻吟的小文章。笔记也好，书评也罢，我都乐于去接受这样的定位。加载页面应该花了你好一会儿，感谢你看到这里。</p>
+<p>至于宿命和下雨嘛，别犯傻了，五月下雨很正常。</p>
 
     </article>
    
@@ -687,13 +687,13 @@ top:50vh;
         <div class="sidebar-panel-tags">
     <div class="sidebar-tags-name">
     
-        <span class="sidebar-tag-name" data-tags="序号0"><span class="iconfont-archer">&#xe606;</span>序号0</span>
-    
-        <span class="sidebar-tag-name" data-tags="乱侃"><span class="iconfont-archer">&#xe606;</span>乱侃</span>
-    
         <span class="sidebar-tag-name" data-tags="Markov Chain"><span class="iconfont-archer">&#xe606;</span>Markov Chain</span>
     
         <span class="sidebar-tag-name" data-tags="魔幻现实"><span class="iconfont-archer">&#xe606;</span>魔幻现实</span>
+    
+        <span class="sidebar-tag-name" data-tags="序号0"><span class="iconfont-archer">&#xe606;</span>序号0</span>
+    
+        <span class="sidebar-tag-name" data-tags="乱侃"><span class="iconfont-archer">&#xe606;</span>乱侃</span>
     
     </div>
     <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
@@ -728,9 +728,9 @@ jsonContent:
         <div class="sidebar-panel-categories">
     <div class="sidebar-categories-name">
     
-        <span class="sidebar-category-name" data-categories="Insights"><span class="iconfont-archer">&#xe60a;</span>Insights</span>
-    
         <span class="sidebar-category-name" data-categories="Tech"><span class="iconfont-archer">&#xe60a;</span>Tech</span>
+    
+        <span class="sidebar-category-name" data-categories="Insights"><span class="iconfont-archer">&#xe60a;</span>Insights</span>
     
         <span class="sidebar-category-name" data-categories="Tech/Insights"><span class="iconfont-archer">&#xe60a;</span>Tech/Insights</span>
     
